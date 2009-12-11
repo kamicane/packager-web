@@ -48,7 +48,7 @@ class Web extends Control {
 		
 		$this->data(array(
 			'package' => $package,
-			'package_name' => $this->pkg->get_key('package'),
+			'package_name' => $this->pkg->get_key('name'),
 			'package_web' => markdown($this->pkg->get_key('web')),
 			'package_authors' => markdown($this->pkg->get_key('authors')),
 			'package_description' => markdown($this->pkg->get_key('description')),
