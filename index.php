@@ -31,7 +31,7 @@ class Web extends Control {
 		$this->pkg = new Packager($packages[$package]);
 		
 		if (count($components) == 0) return $this->display($package);
-		else return $this->download_components($package, $components);
+		else return $this->output($package, $components);
 	}
 	
 	protected function display($package){
@@ -59,7 +59,7 @@ class Web extends Control {
 		$this->render('interface');
 	}
 	
-	public function download_files(){
+	public function download(){
 		global $packages;
 		
 		$files = $this->post('files');
@@ -68,22 +68,20 @@ class Web extends Control {
 		$pkg = new Packager($packages[$package]);
 		$contents = $pkg->build_from_files($files);
 		
-		return $this->serve($pkg->get_key('exports'), $contents);
-	}
-	
-	protected function download_components($package, $components){
-		global $packages;
-		
-		$pkg = new Packager($packages[$package]);
-		$contents = $pkg->build_from_components($components);
+		header("Content-Type: text/plain");
+		header('Content-Disposition: attachment; filename="' . $pkg->get_key('exports') . '"');
 		
 		echo $contents;
 	}
 	
-	protected function serve($file_name, $contents){
-		header("Content-Type: text/plain");
-		header('Content-Disposition: attachment; filename="' . $file_name . '"');
+	protected function output($package, $components){
+		global $packages;
+		
+		$pkg = new Packager($packages[$package]);
 
+		$contents = $pkg->build_from_components($components);
+
+		header('Content-Type: text/javascript');
 		echo $contents;
 	}
 	

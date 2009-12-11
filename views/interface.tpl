@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	
-	<title>Packager</title>
+	<title>Packager Web</title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
@@ -47,7 +47,7 @@
 		</tr>
 	</table>
 	
-	<form action="<?php echo BASE_PATH;?>/web/download_files" method="post">
+	<form action="<?php echo BASE_PATH;?>/web/download" method="post">
 
 	<input type="hidden" name="package" value="<?php echo $package;?>"/>
 	
