@@ -41,6 +41,10 @@
 			<th>Copyright</th>
 			<td><?php echo $package_copyright;?></td>
 		</tr>
+		<tr class="middle">
+			<th>License</th>
+			<td><?php echo $package_license;?></td>
+		</tr>
 		<tr class="last">
 			<th>Authors</th>
 			<td><?php echo $package_authors;?></td>
