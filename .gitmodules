@@ -1,6 +1,6 @@
-[submodule "packager"]
-	path = packager
-	url = git://github.com/kamicane/packager.git
-[submodule "control"]
-	path = control
+[submodule "libs/control"]
+	path = libs/control
 	url = git://github.com/kamicane/control.git
+[submodule "libs/packager"]
+	path = libs/packager
+	url = git://github.com/kamicane/packager.git

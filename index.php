@@ -1,7 +1,7 @@
 <?php
 
-require "packager/packager.php";
-require "control/control.php";
+require "libs/packager/packager.php";
+require "libs/control/control.php";
 require "libs/markdown.php";
 
 $packages = YAML::decode_file('packages.yml');
