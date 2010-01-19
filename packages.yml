@@ -1,1 +1,3 @@
-mootools-core: "/Users/kamicane/Sites/mootools-core-one/package.yml"
+core: "/Users/kamicane/Sites/mootools-core-one/package.yml"
+touch: "/Users/kamicane/Sites/mootools-touch/package.yml"
+art: "/Users/kamicane/Sites/art/package.yml"
