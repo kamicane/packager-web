@@ -28,19 +28,20 @@ class Web extends Control {
 		$data_files = array();
 
 		foreach ($files as $file) $data_files[$file] = array(
-			'depends' => implode(',', $this->pkg->get_file_depends($file)),
+			'name' => $this->pkg->get_file_name($file),
+			'depends' => implode(',', $this->pkg->get_file_dependancies($file)),
 			'provides' => implode(',', $this->pkg->get_file_provides($file)),
 			'description' => markdown($this->pkg->get_file_description($file))
 		);
 		
 		$this->data(array(
 			'package' => $package,
-			'package_name' => $this->pkg->get_key('name'),
-			'package_web' => markdown($this->pkg->get_key('web')),
-			'package_authors' => markdown($this->pkg->get_key('authors')),
-			'package_description' => markdown($this->pkg->get_key('description')),
-			'package_license' => markdown($this->pkg->get_key('license')),
-			'package_copyright' => markdown($this->pkg->get_key('copyright')),
+			'package_name' => $this->pkg->get_package_name(),
+			'package_web' => markdown($this->pkg->get_package_web()),
+			'package_authors' => markdown(implode(' & ', $this->pkg->get_package_authors())),
+			'package_description' => markdown($this->pkg->get_package_description()),
+			'package_license' => markdown($this->pkg->get_package_license()),
+			'package_copyright' => markdown($this->pkg->get_package_copyright()),
 			'files' => $data_files
 		));
 		

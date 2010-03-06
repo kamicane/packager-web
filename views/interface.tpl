@@ -77,7 +77,8 @@
 			$depends = $file['depends'];
 			$provides = $file['provides'];
 			echo "<input type=\"checkbox\" name=\"files[]\" value=\"$name\" depends=\"$depends\" provides=\"$provides\"/></td>";
-			echo "<td class=\"middle file\">$name</td>";
+			$file_name = $file['name'];
+			echo "<td class=\"middle file\">$file_name</td>";
 			echo "<td class=\"middle provides\">$provides</td>";
 			$description = $file['description'];
 			echo "<td class=\"last description\">$description</td>";
