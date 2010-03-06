@@ -58,7 +58,7 @@ class Web extends Control {
 		$contents = $pkg->build_from_files($files);
 		
 		header("Content-Type: text/plain");
-		header('Content-Disposition: attachment; filename="' . $pkg->get_key('exports') . '"');
+		header('Content-Disposition: attachment; filename="' . $pkg->get_package_name() . '.js"');
 		
 		echo $contents;
 	}
