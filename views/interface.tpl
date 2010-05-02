@@ -16,86 +16,87 @@
 </head>
 <body>
 	
-	<?php
+	<form action="<?php echo BASE_PATH;?>/web/download" method="post">
 
-	if (!empty($instructions)){
-		echo "<div class=\"instructions\">$instructions</div>";
-	} else {
+	<?php
+	
+	foreach ($packages as $name => $data){
+		
+	?>
+	
+		<table class="vertical">
+			<tr class="first">
+				<th>Name</th>
+				<td><?php echo $name;?></td>
+			</tr>
+			<tr class="middle">
+				<th>Web</th>
+				<td><?php echo $data['package_web'];?></td>
+			</tr>
+			<tr class="middle">
+				<th>Description</th>
+				<td><?php echo $data['package_description'];?></td>
+			</tr>
+			<tr class="middle">
+				<th>Copyright</th>
+				<td><?php echo $data['package_copyright'];?></td>
+			</tr>
+			<tr class="middle">
+				<th>License</th>
+				<td><?php echo $data['package_license'];?></td>
+			</tr>
+			<tr class="last">
+				<th>Authors</th>
+				<td><?php echo $data['package_authors'];?></td>
+			</tr>
+		</table>
+		
+		<table class="horizontal">
+			<tr class="first">
+				<th class="first"></th>
+				<th class="middle">File</th>
+				<th class="middle">Provides</th>
+				<th class="last">Description</th>
+			</tr>
+			<?php
+
+			$c = 0;
+			$i = 0;
+			
+			$files = $data['files'];
+
+			foreach ($files as $name => $file) $c++;
+
+			foreach ($files as $name => $file){
+				$i++;
+				$class_name = ($i == $c) ? 'last' : 'middle';
+				echo "<tr class=\"$class_name unchecked\">";
+				echo "<td class=\"first check\"><div class=\"checkbox\"></div>";
+				$depends = $file['depends'];
+				$provides = $file['provides'];
+				echo "<input type=\"checkbox\" name=\"files[]\" value=\"$name\" depends=\"$depends\" /></td>";
+				$file_name = $file['name'];
+				echo "<td class=\"middle file\">$file_name</td>";
+				echo "<td class=\"middle provides\">$provides</td>";
+				$description = $file['description'];
+				echo "<td class=\"last description\">$description</td>";
+				echo "</tr>";
+			}
+
+			?>
+		</table>
+		
+	<?php
+		
+	}
 	
 	?>
 	
-	<table class="vertical">
-		<tr class="first">
-			<th>Name</th>
-			<td><?php echo $package_name;?></td>
-		</tr>
-		<tr class="middle">
-			<th>Web</th>
-			<td><?php echo $package_web;?></td>
-		</tr>
-		<tr class="middle">
-			<th>Description</th>
-			<td><?php echo $package_description;?></td>
-		</tr>
-		<tr class="middle">
-			<th>Copyright</th>
-			<td><?php echo $package_copyright;?></td>
-		</tr>
-		<tr class="middle">
-			<th>License</th>
-			<td><?php echo $package_license;?></td>
-		</tr>
-		<tr class="last">
-			<th>Authors</th>
-			<td><?php echo $package_authors;?></td>
-		</tr>
-	</table>
-	
-	<form action="<?php echo BASE_PATH;?>/web/download" method="post">
-
-	<input type="hidden" name="package" value="<?php echo $package;?>"/>
-	
-	<table class="horizontal">
-		<tr class="first">
-			<th class="first"></th>
-			<th class="middle">File</th>
-			<th class="middle">Provides</th>
-			<th class="last">Description</th>
-		</tr>
-		<?php
-		
-		$c = 0;
-		$i = 0;
-		
-		foreach ($files as $name => $file) $c++;
-		
-		foreach ($files as $name => $file){
-			$i++;
-			$class_name = ($i == $c) ? 'last' : 'middle';
-			echo "<tr class=\"$class_name unchecked\">";
-			echo "<td class=\"first check\"><div class=\"checkbox\"></div>";
-			$depends = $file['depends'];
-			$provides = $file['provides'];
-			echo "<input type=\"checkbox\" name=\"files[]\" value=\"$name\" depends=\"$depends\" provides=\"$provides\"/></td>";
-			$file_name = $file['name'];
-			echo "<td class=\"middle file\">$file_name</td>";
-			echo "<td class=\"middle provides\">$provides</td>";
-			$description = $file['description'];
-			echo "<td class=\"last description\">$description</td>";
-			echo "</tr>";
-		}
-		
-		?>
-	</table>
 	<p class="submit">
 		<input type="submit" value="download" />
 	</p>
 	
 	</form>
-	
-	<?php
-	}
-	?>
-	
+		
 </body>
 </html>

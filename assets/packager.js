@@ -5,7 +5,6 @@ var Packager = {
 			checkBox.checked = false;
 			
 			var depends = checkBox.get('depends');
-			var provides = checkBox.get('provides');
 			var value = checkBox.get('value');
 			
 			depends = depends ? depends.split(',') : [];
@@ -13,7 +12,6 @@ var Packager = {
 			CheckBoxes[value] = {
 				checkBox: checkBox,
 				depends: depends,
-				provides: provides,
 				parent: checkBox.getParent('tr')
 			};
 			
