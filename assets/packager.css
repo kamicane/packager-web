@@ -35,6 +35,7 @@ div.checkbox {
 	width: 12px;
 	height: 12px;
 	border: 1px solid #aaa;
+	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 }
 
@@ -89,7 +90,7 @@ table.vertical td {
 
 table.horizontal th.first {
 	border-left: 1px solid #bbb;
-	
+	-moz-border-radius: 6px 0 0 0;
 	-webkit-border-top-left-radius: 6px;
 }
 
@@ -99,7 +100,7 @@ table.horizontal th.middle {
 
 table.horizontal th.last {
 	border-right: 1px solid #bbb;
-	
+	-moz-border-radius: 0 6px 0 0;
 	-webkit-border-top-right-radius: 6px;
 }
 
@@ -116,6 +117,7 @@ table.horizontal td.last {
 
 table.horizontal tr.last td.first {
 	border-bottom: 1px solid #bbb;
+	-moz-border-radius: 0 0 0 6px;
 	-webkit-border-bottom-left-radius: 6px;
 }
 
@@ -125,6 +127,7 @@ table.horizontal tr.last td.middle {
 
 table.horizontal tr.last td.last {
 	border-bottom: 1px solid #bbb;
+	-moz-border-radius: 0 0 6px 0;
 	-webkit-border-bottom-right-radius: 6px;
 }
 
@@ -137,18 +140,22 @@ table.vertical tr.last th, table.vertical tr.last td {
 }
 
 table.vertical tr.first th {
+	-moz-border-radius: 6px 0 0 0;
 	-webkit-border-top-left-radius: 6px;
 }
 
 table.vertical tr.last th {
+	-moz-border-radius: 0 0 0 6px;
 	-webkit-border-bottom-left-radius: 6px;
 }
 
 table.vertical tr.first td {
+	-moz-border-radius: 0 6px 0 0;
 	-webkit-border-top-right-radius: 6px;
 }
 
 table.vertical tr.last td {
+	-moz-border-radius: 0 0 6px 0;
 	-webkit-border-bottom-right-radius: 6px;
 }
 
@@ -174,6 +181,7 @@ p.submit input {
 	font: 14px/1.2 Helvetica;
 	font-weight: bold;
 	border: 1px solid #aaa;
+	-moz-border-radius: 24px;
 	-webkit-border-radius: 24px;
 	background: #f9f9f9;
 	color: #444;
