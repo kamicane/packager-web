@@ -13,7 +13,7 @@ Installation
 Configuration
 -------------
 
-Edit `packages.yml` and insert at least one `package.yml` path. If you have the source for mootools core 1.3 for instance, point it to its `package.yml`. Your `packages.yml` will look like this:
+Create a `packages.yml` and insert at least one `package.yml` path. If you have the source for mootools core 1.3 for instance, point it to its `package.yml`. You can use the `packages.yml.example` as base for your `packages.yml` Your `packages.yml` will look like this:
 
 	- "/Users/kamicane/Sites/mootools-core/package.yml"
 	- "/Users/kamicane/Sites/mootools-more/package.yml"
