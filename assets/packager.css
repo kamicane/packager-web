@@ -36,15 +36,19 @@ div.checkbox {
 	height: 12px;
 	border: 1px solid #aaa;
 	-webkit-border-radius: 2px;
+	background: #f9f9f9;
 }
 
 tr.checked div.checkbox {
-	background: #b0c4dc;
 	border: 1px solid #444;
 }
 
-tr.unchecked div.checkbox {
-	background: #f9f9f9;
+tr.required div.checkbox {
+	background: #b0dcc4;
+}
+
+tr.selected div.checkbox {
+	background: #b0c4dc;
 }
 
 table {
