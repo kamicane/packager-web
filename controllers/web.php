@@ -14,7 +14,7 @@ class Web extends Control {
 			$data[$package] = array(
 				'files' => array(),
 				'package' => $package,
-				'package_web' => markdown($pkg->get_package_web()),
+				'package_web' => markdown($pkg->get_package_web($package)),
 				'package_authors' => markdown(implode(' & ', $pkg->get_package_authors($package))),
 				'package_description' => markdown($pkg->get_package_description($package)),
 				'package_license' => markdown($pkg->get_package_license($package)),
