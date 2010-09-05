@@ -81,6 +81,7 @@
 
 		<p class="submit">
 			<input type="submit" value="download" />
+			<input type="submit" name="addheaders" value="download with component list header" />
 		</p>
 
 	</form>

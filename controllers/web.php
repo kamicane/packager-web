@@ -46,6 +46,7 @@ class Web extends Control {
 		global $packages;
 		
 		$files = $this->post('files');
+		$addheaders = $this->post('addheaders');
 		
 		$pkg = new Packager($packages);
 		$contents = $pkg->build_from_files($files);
@@ -53,9 +54,43 @@ class Web extends Control {
 		header("Content-Type: text/plain");
 		header('Content-Disposition: attachment; filename="' . $pkg->get_package_name() . '.js"');
 		
+		if ($addheaders) echo $this->get_headers($pkg, $files);
 		echo $contents;
 	}
 	
+	public function get_headers($pkg, $files){
+		$header = Array();
+		$header['copyrights'] = Array();
+		$header['licenses'] = Array();
+		$header['components'] = Array();
+
+		foreach ($files as $file) {
+			$file_name = $pkg->get_file_name($file);
+			$file_package = $pkg->get_file_package($file);
+			$c = utf8_encode("\xa9");
+			$header['copyrights'][] = '- ' . preg_replace("/^(?:(?:copyright|&copy;|$c)\s*)+/i", '', $pkg->get_package_copyright($file_package));
+			$header['licenses'][] = "- {$pkg->get_package_license($file_package)}";
+			$header['components'][] = "- $file_package/$file_name: [" . implode(", ", $pkg->get_file_provides($file)) . "]";
+		}
+		$head = "/*\n---\n";
+		if ($this->errors) {
+			$head .= "errors:\n  - " . implode("\n  - ", $errors) . "\n";
+		}
+		foreach ($header as $k => &$h) {
+			$heads = Array();
+			foreach ($h as $v) {
+				if (!in_array($v, $heads)) {
+					$heads[] = "{$v}";
+				}
+			}
+			$h = "{$k}:\n  " . implode("\n  ", $heads) . "\n";
+		}
+		$head .= implode("\n", $header);
+		$head .="...\n*/\n";
+
+		return $head;
+	}
+
 }
 
 ?>
