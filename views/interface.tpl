@@ -80,8 +80,8 @@
 	<?php endforeach; ?>
 
 		<p class="submit">
-			<input type="hidden" name="addheaders" value="0" />
-			<input type="reset" id="reset" value="reset" />
+			<input type="hidden" name="addheaders" value="" />
+			<input type="reset" value="reset" />
 			<input type="submit" value="download" />
 			<input type="submit" name="addheaders" value="download with package info" />
 		</p>
