@@ -1,131 +1,145 @@
-var Packager = {
+(function(){
 
-	start: function(){
-		$$('input[type=checkbox]').each(function(checkBox){
-			checkBox.checked = false;
+var components = {};
 
-			var depends = checkBox.get('data-depends'),
-				value = checkBox.get('value');
+var Packager = this.Packager = {
+
+	init: function(form){
+		form = document.id(form || 'packager');
+
+		form.getElements('input[type=checkbox]').each(function(element){
+			element.set('checked', false);
+			element.setStyle('display', 'none');
+
+			var depends = element.get('data-depends'),
+				name = element.get('value'),
+				parent = element.getParent('tr');
 
 			depends = depends ? depends.split(',') : [];
 
-			CheckBoxes[value] = {
-				element: checkBox,
+			var component = components[name] = {
+				element: element,
 				depends: depends,
-				parent: checkBox.getParent('tr')
+				parent: parent,
+				selected: false,
+				required: []
 			};
 
-			checkBox.style.display = 'none';
-
-			CheckBoxes[value].parent.addListener('click', function(){
-				Packager.buffer = {};
-				if (checkBox.get('data-selected')) Packager.deselect(value);
-				else Packager.select(value);
+			parent.addListener('click', function(){
+				if (component.selected) Packager.deselect(name);
+				else Packager.select(name);
 			});
+		});
+
+		form.addEvent('reset', function(event){
+			event.stop();
+			Packager.reset();
 		});
 	},
 
 	check: function(name){
-		var checkBox = CheckBoxes[name],
-			element = checkBox.element;
+		var component = components[name],
+			element = component.element;
 
-		if (element.get('checked') || !element.get('data-selected') && !element.get('data-required'))
-			return false;
+		if (element.get('checked') || !component.selected && !component.required.length) return;
 
 		element.set('checked', true);
-		checkBox.parent.addClass('checked').removeClass('unchecked');
+		component.parent.addClass('checked').removeClass('unchecked');
 
-		return true;
+		component.depends.each(function(dependancy){
+			Packager.require(dependancy, name);
+		});
 	},
 
 	uncheck: function(name){
-		var checkBox = CheckBoxes[name],
-			element = checkBox.element;
+		var component = components[name],
+			element = component.element;
 
-		if (!element.get('checked') || element.get('data-selected') || element.get('data-required'))
-			return false;
+		if (!element.get('checked') || component.selected || component.required.length) return;
 
 		element.set('checked', false);
-		checkBox.parent.addClass('unchecked').removeClass('checked');
+		component.parent.addClass('unchecked').removeClass('checked');
 
-		return true;
-	},
-
-	select: function(name, index){
-		if (Packager.buffer[name]) return;
-		Packager.buffer[name] = true;
-
-		var checkBox = CheckBoxes[name],
-			element = checkBox.element;
-
-		if (element.get('data-selected')) return;
-
-		element.set('data-selected', '1');
-
-		checkBox.parent.addClass('selected');
-		this.check(name)
-
-		if ($type(index) == 'number') return;
-		checkBox.depends.each(function(dependancy){
-			Packager.require(dependancy, name);
-		});
-	},
-
-	deselect: function(name, index){
-		if (Packager.buffer[name]) return;
-		Packager.buffer[name] = true;
-
-		var checkBox = CheckBoxes[name],
-			element = checkBox.element;
-
-		if (!element.get('data-selected')) return;
-
-		element.set('data-selected', null);
-
-		checkBox.parent.removeClass('selected');
-		this.uncheck(name)
-
-		checkBox.depends.each(function(dependancy){
+		component.depends.each(function(dependancy){
 			Packager.unrequire(dependancy, name);
 		});
+	},
+
+	select: function(name){
+		var component = components[name];
+
+		if (component.selected) return;
+
+		component.selected = true;
+		component.parent.addClass('selected');
+
+		this.check(name);
+	},
+
+	deselect: function(name){
+		var component = components[name];
+
+		if (!component.selected) return;
+
+		component.selected = false;
+		component.parent.removeClass('selected');
+
+		this.uncheck(name);
 	},
 
 	require: function(name, req){
-		var checkBox = CheckBoxes[name],
-			element = checkBox.element,
-			required = element.get('data-required');
+		var component = components[name];
+		if (!component) return;
 
-		if (required && required.contains(req)) return;
+		var required = component.required;
+		if (required.contains(req)) return;
 
-		element.set('data-required', (required ? required + ' ' : '') + req);
+		required.push(req);
+		component.parent.addClass('required');
 
-		checkBox.parent.addClass('required');
-		this.check(name)
-
-		checkBox.depends.each(function(dependancy){
-			Packager.require(dependancy, name);
-		});
+		this.check(name);
 	},
 
 	unrequire: function(name, req){
-		var checkBox = CheckBoxes[name],
-			element = checkBox.element,
-			required = element.get('data-required');
+		var component = components[name];
+		if (!component) return;
 
-		if (!required || !required.contains(req)) return;
+		var required = component.required;
+		if (!required.contains(req)) return;
 
-		element.set('data-required', required.replace(new RegExp('(^\\s*|\\s+)' + req + '(?:\\s+|\\s*$)'), '$1'));
+		required.erase(req);
+		if (!required.length) component.parent.removeClass('required');
 
-		if (!element.get('data-required')) checkBox.parent.removeClass('required');
-		if (!this.uncheck(name)) return;
+		this.uncheck(name);
+	},
 
-		checkBox.depends.each(function(dependancy){
-			Packager.unrequire(dependancy, name);
-		});
+	getSelected: function(){
+		var selected = [];
+		for (var name in components) if (components[name].selected) selected.push(name);
+		return selected;
+	},
+
+	setSelected: function(selected){
+		for (var name in components){
+			if (selected.contains(name)) this.select(name);
+			else this.deselect(name);
+		}
+	},
+
+	save: function(){
+		return JSON.encode(this.getSelected());
+	},
+
+	load: function(selected){
+		this.setSelected(JSON.decode(selected));
+	},
+
+	reset: function(){
+		for (var name in components) this.deselect(name);
 	}
 
 };
 
-var CheckBoxes = {};
+document.addEvent('domready', Packager.init);
 
-document.addEvent('domready', Packager.start);
+})();

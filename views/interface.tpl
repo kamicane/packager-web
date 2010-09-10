@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<form action="<?php echo BASE_PATH;?>/web/download" method="post">
+	<form id="packager" action="<?php echo BASE_PATH; ?>/web/download" method="post">
 
 	<?php foreach ($packages as $name => $data): ?>
 
@@ -80,8 +80,9 @@
 	<?php endforeach; ?>
 
 		<p class="submit">
+			<input type="reset" id="reset" value="reset" />
 			<input type="submit" value="download" />
-			<input type="submit" name="addheaders" value="download with component list header" />
+			<input type="submit" name="addheaders" value="download with package info" />
 		</p>
 
 	</form>
