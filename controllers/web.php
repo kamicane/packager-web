@@ -64,7 +64,7 @@ class Web extends Control {
 		$header['licenses'] = Array();
 		$header['components'] = Array();
 
-		foreach ($files as $file) {
+		if (is_array($files)) foreach ($files as $file) {
 			$file_name = $pkg->get_file_name($file);
 			$file_package = $pkg->get_file_package($file);
 			$c = utf8_encode("\xa9");
@@ -73,9 +73,6 @@ class Web extends Control {
 			$header['components'][] = "- $file_package/$file_name: [" . implode(", ", $pkg->get_file_provides($file)) . "]";
 		}
 		$head = "/*\n---\n";
-		if ($this->errors) {
-			$head .= "errors:\n  - " . implode("\n  - ", $errors) . "\n";
-		}
 		foreach ($header as $k => &$h) {
 			$heads = Array();
 			foreach ($h as $v) {
