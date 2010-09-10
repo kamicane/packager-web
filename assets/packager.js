@@ -31,9 +31,14 @@ var Packager = this.Packager = {
 			});
 		});
 
-		form.addEvent('reset', function(event){
-			event.stop();
-			Packager.reset();
+		form.addEvents({
+			submit: function(event){
+				if (!Packager.getSelected().length) event.stop();
+			},
+			reset: function(event){
+				event.stop();
+				Packager.reset();
+			}
 		});
 	},
 
