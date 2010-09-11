@@ -40,6 +40,8 @@ var Packager = this.Packager = {
 				Packager.reset();
 			}
 		});
+
+		Packager.fromHash();
 	},
 
 	check: function(name){
@@ -129,6 +131,13 @@ var Packager = this.Packager = {
 			if (selected.contains(name)) this.select(name);
 			else this.deselect(name);
 		}
+	},
+
+	fromHash: function(){
+		var hash = window.location.hash;
+		if (!hash) return;
+		var components = hash.substr(1).split(';');
+		this.setSelected(components);
 	},
 
 	save: function(){
