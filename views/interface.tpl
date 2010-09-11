@@ -19,36 +19,47 @@
 		<div id="package-<?php echo $name; ?>" class="package">
 
 			<table class="vertical">
-				<tr class="first">
-					<th>Name</th>
-					<td>
-						<?php echo $name; ?>
-						<div class="buttons">
-							<input type="button" class="select" value="select package" />
-							<input type="button" class="deselect" value="deselect package" />
-						</div>
-					</td>
-				</tr>
-				<tr class="middle">
-					<th>Web</th>
-					<td><?php echo $data['package_web']; ?></td>
-				</tr>
-				<tr class="middle">
-					<th>Description</th>
-					<td><?php echo $data['package_description']; ?></td>
-				</tr>
-				<tr class="middle">
-					<th>Copyright</th>
-					<td><?php echo $data['package_copyright']; ?></td>
-				</tr>
-				<tr class="middle">
-					<th>License</th>
-					<td><?php echo $data['package_license']; ?></td>
-				</tr>
-				<tr class="last">
-					<th>Authors</th>
-					<td><?php echo $data['package_authors']; ?></td>
-				</tr>
+				<thead>
+					<tr class="first">
+						<th>Name</th>
+						<td>
+							<?php echo $name; ?>
+							<div class="buttons">
+								<input type="hidden" name="disabled[]" class="toggle" value="" />
+								<div class="enabled">
+									<input type="button" class="select" value="select package" />
+									<input type="button" class="deselect" value="deselect package" />
+									<input type="button" class="disable" value="disable package" />
+								</div>
+								<div class="disabled">
+									<input type="button" class="enable" value="enable package" />
+								</div>
+							</div>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="middle">
+						<th>Web</th>
+						<td><?php echo $data['package_web']; ?></td>
+					</tr>
+					<tr class="middle">
+						<th>Description</th>
+						<td><?php echo $data['package_description']; ?></td>
+					</tr>
+					<tr class="middle">
+						<th>Copyright</th>
+						<td><?php echo $data['package_copyright']; ?></td>
+					</tr>
+					<tr class="middle">
+						<th>License</th>
+						<td><?php echo $data['package_license']; ?></td>
+					</tr>
+					<tr class="last">
+						<th>Authors</th>
+						<td><?php echo $data['package_authors']; ?></td>
+					</tr>
+				</tbody>
 			</table>
 
 			<table class="horizontal">

@@ -47,8 +47,14 @@ class Web extends Control {
 		
 		$files = $this->post('files');
 		$addheaders = $this->post('addheaders');
+		$disabled = $this->post('disabled');
 		
 		$pkg = new Packager($packages);
+
+		foreach ($disabled as $package){
+			if ($package) $pkg->remove_package($package);
+		}
+
 		$contents = $pkg->build_from_files($files);
 		
 		header("Content-Type: text/plain");

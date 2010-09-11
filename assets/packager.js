@@ -14,6 +14,7 @@ var Packager = this.Packager = {
 			var pkg = packages[name] = {
 				enabled: true,
 				element: element,
+				toggle: element.getElement('.toggle'),
 				components: []
 			};
 
@@ -48,6 +49,14 @@ var Packager = this.Packager = {
 
 			element.getElement('.deselect').addListener('click', function(){
 				Packager.deselectPackage(name);
+			});
+
+			element.getElement('.disable').addListener('click', function(){
+				Packager.disablePackage(name);
+			});
+
+			element.getElement('.enable').addListener('click', function(){
+				Packager.enablePackage(name);
 			});
 
 		});
@@ -156,6 +165,34 @@ var Packager = this.Packager = {
 
 		pkg.components.each(function(name){
 			Packager.deselect(name);
+		});
+	},
+
+	enablePackage: function(name){
+		var pkg = packages[name];
+		if (!pkg || pkg.enabled) return;
+
+		pkg.enabled = true;
+		pkg.element.removeClass('package-disabled');
+		pkg.element.getElement('tr').removeClass('last');
+		pkg.toggle.set('value', '');
+
+		pkg.components.each(function(name){
+			components[name].element.set('disabled', false);
+		});
+	},
+
+	disablePackage: function(name){
+		var pkg = packages[name];
+		if (!pkg || !pkg.enabled) return;
+
+		pkg.enabled = false;
+		pkg.element.addClass('package-disabled');
+		pkg.element.getElement('tr').addClass('last');
+		pkg.toggle.set('value', name);
+
+		pkg.components.each(function(name){
+			components[name].element.set('disabled', true);
 		});
 	},
 

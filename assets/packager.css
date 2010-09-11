@@ -61,6 +61,14 @@ table {
 	margin-bottom: 20px;
 }
 
+div.package-disabled table.horizontal {
+	display: none;
+}
+
+div.package-disabled table.vertical tbody {
+	display: none;
+}
+
 th {
 	text-align: left;
 	background: #fff;
@@ -192,6 +200,18 @@ p.submit {
 
 div.buttons {
 	float: right;
+}
+
+div.package div.disabled {
+	display: none;
+}
+
+div.package-disabled div.enabled {
+	display: none;
+}
+
+div.package-disabled div.disabled {
+	display: block;
 }
 
 p.submit input {
