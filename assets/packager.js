@@ -1,34 +1,55 @@
 (function(){
 
-var components = {};
+var packages = {},
+	components = {};
 
 var Packager = this.Packager = {
 
 	init: function(form){
 		form = document.id(form || 'packager');
 
-		form.getElements('input[type=checkbox]').each(function(element){
-			element.set('checked', false);
-			element.setStyle('display', 'none');
+		form.getElements('.package').each(function(element){
+			var name = element.get('id').substr(8);
 
-			var depends = element.get('data-depends'),
-				name = element.get('value'),
-				parent = element.getParent('tr');
-
-			depends = depends ? depends.split(',') : [];
-
-			var component = components[name] = {
+			var pkg = packages[name] = {
+				enabled: true,
 				element: element,
-				depends: depends,
-				parent: parent,
-				selected: false,
-				required: []
+				components: []
 			};
 
-			parent.addListener('click', function(){
-				if (component.selected) Packager.deselect(name);
-				else Packager.select(name);
+			element.getElements('input[type=checkbox]').each(function(element){
+				element.set('checked', false);
+				element.setStyle('display', 'none');
+
+				var depends = element.get('data-depends'),
+					name = element.get('value'),
+					parent = element.getParent('tr');
+
+				depends = depends ? depends.split(',') : [];
+
+				pkg.components.push(name);
+				var component = components[name] = {
+					element: element,
+					depends: depends,
+					parent: parent,
+					selected: false,
+					required: []
+				};
+
+				parent.addListener('click', function(){
+					if (component.selected) Packager.deselect(name);
+					else Packager.select(name);
+				});
 			});
+
+			element.getElement('.select').addListener('click', function(){
+				Packager.selectPackage(name);
+			});
+
+			element.getElement('.deselect').addListener('click', function(){
+				Packager.deselectPackage(name);
+			});
+
 		});
 
 		form.addEvents({
@@ -118,6 +139,24 @@ var Packager = this.Packager = {
 		if (!required.length) component.parent.removeClass('required');
 
 		this.uncheck(name);
+	},
+
+	selectPackage: function(name){
+		var pkg = packages[name];
+		if (!pkg) return;
+
+		pkg.components.each(function(name){
+			Packager.select(name);
+		});
+	},
+
+	deselectPackage: function(name){
+		var pkg = packages[name];
+		if (!pkg) return;
+
+		pkg.components.each(function(name){
+			Packager.deselect(name);
+		});
 	},
 
 	getSelected: function(){

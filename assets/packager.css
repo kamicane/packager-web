@@ -190,6 +190,10 @@ p.submit {
 	text-align: center;
 }
 
+div.buttons {
+	float: right;
+}
+
 p.submit input {
 	font: 14px/1.2 Helvetica;
 	font-weight: bold;
@@ -200,6 +204,23 @@ p.submit input {
 	background: #f9f9f9;
 	color: #444;
 	padding: 6px 20px;
+}
+
+div.buttons input {
+	font: 12px/1.1 Helvetica;
+	font-weight: bold;
+	border: 1px solid #aaa;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	background: #f9f9f9;
+	color: #444;
+	padding: 4px 16px;
+}
+
+p.submit input:hover, div.buttons input:hover {
+	background: #f0f0f0;
+	cursor: pointer;
 }
 
 div.instructions p {

@@ -16,66 +16,76 @@
 
 	<?php foreach ($packages as $name => $data): ?>
 
-		<table class="vertical">
-			<tr class="first">
-				<th>Name</th>
-				<td><?php echo $name; ?></td>
-			</tr>
-			<tr class="middle">
-				<th>Web</th>
-				<td><?php echo $data['package_web']; ?></td>
-			</tr>
-			<tr class="middle">
-				<th>Description</th>
-				<td><?php echo $data['package_description']; ?></td>
-			</tr>
-			<tr class="middle">
-				<th>Copyright</th>
-				<td><?php echo $data['package_copyright']; ?></td>
-			</tr>
-			<tr class="middle">
-				<th>License</th>
-				<td><?php echo $data['package_license']; ?></td>
-			</tr>
-			<tr class="last">
-				<th>Authors</th>
-				<td><?php echo $data['package_authors']; ?></td>
-			</tr>
-		</table>
+		<div id="package-<?php echo $name; ?>" class="package">
 
-		<table class="horizontal">
-			<tr class="first">
-				<th class="first"></th>
-				<th class="middle">File</th>
-				<th class="middle">Provides</th>
-				<th class="last">Description</th>
-			</tr>
+			<table class="vertical">
+				<tr class="first">
+					<th>Name</th>
+					<td>
+						<?php echo $name; ?>
+						<div class="buttons">
+							<input type="button" class="select" value="select package" />
+							<input type="button" class="deselect" value="deselect package" />
+						</div>
+					</td>
+				</tr>
+				<tr class="middle">
+					<th>Web</th>
+					<td><?php echo $data['package_web']; ?></td>
+				</tr>
+				<tr class="middle">
+					<th>Description</th>
+					<td><?php echo $data['package_description']; ?></td>
+				</tr>
+				<tr class="middle">
+					<th>Copyright</th>
+					<td><?php echo $data['package_copyright']; ?></td>
+				</tr>
+				<tr class="middle">
+					<th>License</th>
+					<td><?php echo $data['package_license']; ?></td>
+				</tr>
+				<tr class="last">
+					<th>Authors</th>
+					<td><?php echo $data['package_authors']; ?></td>
+				</tr>
+			</table>
 
-		<?php
+			<table class="horizontal">
+				<tr class="first">
+					<th class="first"></th>
+					<th class="middle">File</th>
+					<th class="middle">Provides</th>
+					<th class="last">Description</th>
+				</tr>
 
-		$files = $data['files'];
+			<?php
 
-		$i = 0;
-		$c = count($files);
+			$files = $data['files'];
 
-		foreach ($files as $name => $file):
-			$i++;
+			$i = 0;
+			$c = count($files);
 
-		?>
+			foreach ($files as $name => $file):
+				$i++;
 
-			<tr class="<?php echo ($i == $c) ? 'last ' : 'middle '?>unchecked">
-				<td class="first check">
-					<div class="checkbox"></div>
-					<input type="checkbox" name="files[]" value="<?php echo $name; ?>" data-depends="<?php echo $file['depends']; ?>" />
-				</td>
-				<td class="middle file"><?php echo $file['name']; ?></td>
-				<td class="middle provides"><?php echo $file['provides']; ?></td>
-				<td class="last description"><?php echo $file['description']; ?></td>
-			</tr>
+			?>
 
-		<?php endforeach; ?>
+				<tr class="<?php echo ($i == $c) ? 'last ' : 'middle '?>unchecked">
+					<td class="first check">
+						<div class="checkbox"></div>
+						<input type="checkbox" name="files[]" value="<?php echo $name; ?>" data-depends="<?php echo $file['depends']; ?>" />
+					</td>
+					<td class="middle file"><?php echo $file['name']; ?></td>
+					<td class="middle provides"><?php echo $file['provides']; ?></td>
+					<td class="last description"><?php echo $file['description']; ?></td>
+				</tr>
 
-		</table>
+			<?php endforeach; ?>
+
+			</table>
+
+		</div>
 
 	<?php endforeach; ?>
 
