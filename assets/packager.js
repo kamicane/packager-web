@@ -71,7 +71,13 @@ var Packager = this.Packager = {
 			}
 		});
 
-		Packager.fromHash();
+		Packager.link = document.id('packager-link');
+
+		if (Packager.link) Packager.link.addEvent('mouseup', function(){
+			this.select();
+		});
+
+		Packager.fromUrl();
 	},
 
 	check: function(name){
@@ -111,6 +117,8 @@ var Packager = this.Packager = {
 		component.parent.addClass('selected');
 
 		this.check(name);
+
+		if (this.link) this.link.set('value', this.toUrl());
 	},
 
 	deselect: function(name){
@@ -122,6 +130,8 @@ var Packager = this.Packager = {
 		component.parent.removeClass('selected');
 
 		this.uncheck(name);
+
+		if (this.link) this.link.set('value', this.toUrl());
 	},
 
 	require: function(name, req){
@@ -180,11 +190,15 @@ var Packager = this.Packager = {
 		pkg.components.each(function(name){
 			components[name].element.set('disabled', false);
 		});
+
+		if (this.link) this.link.set('value', this.toUrl());
 	},
 
 	disablePackage: function(name){
 		var pkg = packages[name];
 		if (!pkg || !pkg.enabled) return;
+
+		this.deselectPackage(name);
 
 		pkg.enabled = false;
 		pkg.element.addClass('package-disabled');
@@ -194,6 +208,8 @@ var Packager = this.Packager = {
 		pkg.components.each(function(name){
 			components[name].element.set('disabled', true);
 		});
+
+		if (this.link) this.link.set('value', this.toUrl());
 	},
 
 	getSelected: function(){
@@ -209,19 +225,39 @@ var Packager = this.Packager = {
 		}
 	},
 
-	fromHash: function(){
-		var hash = window.location.hash;
-		if (!hash) return;
-		var components = hash.substr(1).split(';');
-		this.setSelected(components);
+	getDisabledPackages: function(){
+		var disabled = [];
+		for (var name in packages) if (!packages[name].enabled) disabled.push(name);
+		return disabled;
 	},
 
-	save: function(){
-		return JSON.encode(this.getSelected());
+	toUrl: function(){
+		var selected = this.getSelected(),
+			disabled = this.getDisabledPackages(),
+			query = [];
+
+		if (selected.length) query.push('select=' + selected.join(';'));
+		if (disabled.length) query.push('disable=' + disabled.join(';'));
+
+		if (!query.length) return;
+
+		var loc = window.location;
+
+		return loc.protocol + '//' + loc.hostname + loc.pathname + '?' + query.join('&');
 	},
 
-	load: function(selected){
-		this.setSelected(JSON.decode(selected));
+	fromUrl: function(){
+		var query = window.location.search || window.location.hash;
+		if (!query) return;
+
+		var parts = query.substr(1).split('&');
+		parts.each(function(part){
+			var split = part.split('=');
+			if (split[0] == 'select') Packager.setSelected(split[1].split(';'));
+			if (split[0] == 'disable') split[1].split(';').each(function(name){
+				Packager.disablePackage(name);
+			});
+		});
 	},
 
 	reset: function(){

@@ -243,6 +243,17 @@ p.submit input:hover, div.buttons input:hover {
 	cursor: pointer;
 }
 
+div.link {
+	text-align: center;
+}
+div.link input {
+	border: 1px solid #aaa;
+	-moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+	border-radius: 16px;
+	padding: 4px;
+}
+
 div.instructions p {
 	padding-bottom: 1em;
 }

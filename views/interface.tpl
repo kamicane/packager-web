@@ -107,6 +107,11 @@
 			<input type="submit" name="addheaders" value="download with package info" />
 		</p>
 
+		<div class="link">
+			<label for="packager-link">Link to this build:</label>
+			<input type="text" id="packager-link" size="50" value="" />
+		</div>
+
 	</form>
 
 </body>
