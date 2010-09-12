@@ -61,14 +61,6 @@ table {
 	margin-bottom: 20px;
 }
 
-div.package-disabled table.horizontal {
-	display: none;
-}
-
-div.package-disabled table.vertical tbody {
-	display: none;
-}
-
 th {
 	text-align: left;
 	background: #fff;
@@ -76,8 +68,22 @@ th {
 	color: #444;
 }
 
+td {
+	color: #444;
+	background: #eee;
+	padding: 6px;
+}
+
 table.vertical {
 	margin-bottom: 0;
+}
+
+div.package-disabled table.vertical {
+	margin-bottom: 20px;
+}
+
+div.package-disabled table.vertical tbody {
+	display: none;
 }
 
 table.horizontal th {
@@ -90,10 +96,8 @@ table.vertical th {
 	border-right: 1px solid #bbb;
 }
 
-td {
-	color: #444;
-	background: #eee;
-	padding: 6px;
+div.package-disabled table.horizontal {
+	display: none;
 }
 
 table.horizontal td {
@@ -163,6 +167,18 @@ table.vertical tr.first td {
 	-moz-border-radius-topright: 6px;
 	-webkit-border-top-right-radius: 6px;
 	border-top-right-radius: 6px;
+}
+
+div.package-disabled tr.first th {
+	-moz-border-radius-bottomleft: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+div.package-disabled tr.first td {
+	-moz-border-radius-bottomright: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	border-bottom-right-radius: 6px;
 }
 
 td.script {
