@@ -234,7 +234,7 @@ var Packager = this.Packager = {
 		if (selected.length) query.push('select=' + selected.join(';'));
 		if (disabled.length) query.push('disable=' + disabled.join(';'));
 
-		return query.join('&');
+		return query.join('&') || '!';
 	},
 
 	toUrl: function(){
