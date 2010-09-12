@@ -230,7 +230,7 @@ var Packager = this.Packager = {
 		return disabled;
 	},
 
-	toUrl: function(){
+	toQueryString: function(){
 		var selected = this.getSelected(),
 			disabled = this.getDisabledPackages(),
 			query = [];
@@ -238,11 +238,14 @@ var Packager = this.Packager = {
 		if (selected.length) query.push('select=' + selected.join(';'));
 		if (disabled.length) query.push('disable=' + disabled.join(';'));
 
-		if (!query.length) return;
+		return query.join('&');
+	},
 
-		var loc = window.location;
+	toUrl: function(){
+		var loc = window.location,
+			queryString = this.toQueryString();
 
-		return loc.protocol + '//' + loc.hostname + loc.pathname + '?' + query.join('&');
+		return loc.protocol + '//' + loc.hostname + loc.pathname + (queryString ? '#' + queryString : '');
 	},
 
 	fromUrl: function(){
