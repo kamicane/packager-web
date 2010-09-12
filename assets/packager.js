@@ -26,7 +26,7 @@ var Packager = this.Packager = {
 					name = element.get('value'),
 					parent = element.getParent('tr');
 
-				depends = depends ? depends.split(',') : [];
+				depends = depends ? depends.split(', ') : [];
 
 				pkg.components.push(name);
 				var component = components[name] = {
