@@ -4,11 +4,11 @@
 	<meta charset="utf-8" />
 	<title>Packager Web</title>
 
-	<script src="<?php echo BASE_PATH; ?>/libs/mootools.js" type="text/javascript"></script>
-	<script src="<?php echo BASE_PATH; ?>/assets/packager.js" type="text/javascript"></script>
-
 	<link href="<?php echo BASE_PATH; ?>/libs/reset.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="<?php echo BASE_PATH; ?>/assets/packager.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<script src="<?php echo BASE_PATH; ?>/libs/mootools.js" type="text/javascript"></script>
+	<script src="<?php echo BASE_PATH; ?>/assets/packager.js" type="text/javascript"></script>
 </head>
 <body>
 

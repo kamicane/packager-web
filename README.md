@@ -5,7 +5,7 @@ Packager Web is a web application that uses [Packager](http://github.com/kamican
 
 Installation
 ------------
-	
+
 	git clone git://github.com/kamicane/packager-web.git
 	git submodule init
 	git submodule update
@@ -18,7 +18,7 @@ Create a `packages.yml` and insert at least one `package.yml` path. If you have 
 	- "/Users/kamicane/Sites/mootools-core/package.yml"
 	- "/Users/kamicane/Sites/mootools-more/package.yml"
 	- "/Users/kamicane/Sites/some-plugin/package.yml"
-	
+
 Keep in mind this has to be *valid* yaml. Use two spaces before the dash in lists, not a tab. If you get a PHP exception, it means some of the specified paths don't exist, or are not parsable by [Packager](http://github.com/kamicane/packager).
 
 Web Interface
