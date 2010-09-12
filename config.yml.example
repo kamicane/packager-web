@@ -1,7 +1,7 @@
 view:
   title: Packager Web
   theme: packager
-  buttons: [reset, download, addheaders, compress, compress_addheaders]
+  buttons: [reset, download, compress]
 
 packager:
   exports: packaged.js
