@@ -80,9 +80,9 @@ var Packager = this.Packager = {
 		var component = components[name],
 			element = component.element;
 
-		if (element.get('checked') || !component.selected && !component.required.length) return;
+		if (!component.selected && !component.required.length) return;
 
-		element.set('checked', true);
+		if (component.selected) element.set('checked', true);
 		component.parent.addClass('checked').removeClass('unchecked');
 
 		component.depends.each(function(dependancy){
@@ -94,7 +94,7 @@ var Packager = this.Packager = {
 		var component = components[name],
 			element = component.element;
 
-		if (!element.get('checked') || component.selected || component.required.length) return;
+		if (component.selected || component.required.length) return;
 
 		element.set('checked', false);
 		component.parent.addClass('unchecked').removeClass('checked');
@@ -249,10 +249,10 @@ var Packager = this.Packager = {
 	},
 
 	fromUrl: function(){
+		this.reset();
+
 		var query = window.location.search || window.location.hash;
 		if (!query) return;
-
-		this.reset();
 
 		var parts = query.substr(1).split('&');
 		parts.each(function(part){

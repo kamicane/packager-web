@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Packager Web</title>
+	<title><?php echo $config['title']; ?></title>
 
-	<link href="<?php echo BASE_PATH; ?>/libs/reset.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="<?php echo BASE_PATH; ?>/assets/packager.css" rel="stylesheet" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo BASE_PATH; ?>/libs/reset.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo BASE_PATH; ?>/assets/<?php echo $config['theme']; ?>.css" />
 
-	<script src="<?php echo BASE_PATH; ?>/libs/mootools.js" type="text/javascript"></script>
-	<script src="<?php echo BASE_PATH; ?>/assets/packager.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<?php echo BASE_PATH; ?>/libs/mootools.js"></script>
+	<script type="text/javascript" src="<?php echo BASE_PATH; ?>/assets/packager.js"></script>
 </head>
 <body>
 
@@ -101,10 +101,27 @@
 	<?php endforeach; ?>
 
 		<p class="submit">
-			<input type="hidden" name="addheaders" value="" />
-			<input type="reset" value="reset" />
-			<input type="submit" value="download" />
-			<input type="submit" name="addheaders" value="download with package info" />
+			<?php
+
+			foreach ($config['buttons'] as $button){
+				switch ($button){
+
+					case 'reset':
+						echo '<input type="reset" value="reset" />';
+					break;
+
+					case 'download':
+						echo '<input type="submit" value="download" />';
+					break;
+
+					case 'compress':
+						echo '<input type="submit" name="compress" value="download compressed" />';
+					break;
+
+				}
+			}
+
+			?>
 		</p>
 
 	</form>

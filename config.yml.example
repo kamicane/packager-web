@@ -1,0 +1,16 @@
+view:
+  title: Packager Web
+  theme: packager
+  buttons: [reset, download, addheaders, compress, compress_addheaders]
+
+packager:
+  exports: packaged.js
+  compressor: java -jar /usr/share/yui-compressor/yui-compressor.jar --type js -o {FILE} {FILE}
+  tmpdir: /tmp
+
+packages:
+  - "/Users/kamicane/Sites/mootools-core-1.3/"
+  - "/Users/kamicane/Sites/mootools-table/"
+  - "/Users/kamicane/Sites/mootools-color/"
+  - "/Users/kamicane/Sites/art/"
+  - "/Users/kamicane/Sites/mootools-touch/"

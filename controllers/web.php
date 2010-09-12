@@ -3,9 +3,9 @@
 class Web extends Control {
 
 	protected function index(){
-		global $packages;
+		global $config;
 
-		$pkg = new Packager($packages);
+		$pkg = new Packager($config['packages']);
 
 		$data = array();
 
@@ -39,36 +39,61 @@ class Web extends Control {
 		}
 
 		$this->data('packages', $data);
-		$this->render('interface');
+		$this->data('config', $config['view']);
+		$this->render($config['view']['theme']);
 	}
 
 	public function download(){
-		global $packages;
+		global $config;
 
-		$files = $this->post('files');
-		$addheaders = $this->post('addheaders');
-		$disabled = $this->post('disabled');
+		$post = $this->post();
 
-		$pkg = new Packager($packages);
+		$files = isset($post['files']) ? $post['files'] : array();
+		$disabled = isset($post['disabled']) ? $post['disabled'] : array();;
+		$compress = isset($post['compress']) ? true : false;
 
-		foreach ($disabled as $package){
+		$pkg = new Packager($config['packages']);
+
+		foreach ($disabled as $key => $package){
 			if ($package) $pkg->remove_package($package);
+			else unset($disabled[$key]);
 		}
 
 		$contents = $pkg->build_from_files($files);
 
-		header("Content-Type: text/plain");
-		header('Content-Disposition: attachment; filename="' . $pkg->get_package_name() . '.js"');
+		$useonly = count($disabled) ? $pkg->get_packages() : null;
 
-		if ($addheaders) echo $this->get_headers($pkg, $files);
+		if ($compress) $contents = $this->compress($contents);
+
+		header("Content-Type: text/plain");
+		header('Content-Disposition: attachment; filename="' . $config['packager']['exports'] . '"');
+
+		echo $this->get_packager_command($files, $useonly);
+		if ($compress) echo $this->get_headers($pkg, $files);
 		echo $contents;
 	}
 
-	public function get_headers($pkg, $files){
+	protected function get_packager_command($files, $useonly){
+		$cmd = '// packager build';
+
+		foreach ($files as $file){
+			$cmd .= " {$file}";
+		}
+
+		if ($useonly){
+			$cmd .= " +use-only";
+			foreach ($useonly as $name){
+				$cmd .= " {$name}";
+			}
+		}
+
+		return $cmd . "\n";
+	}
+
+	protected function get_headers($pkg, $files){
 		$header = Array();
 		$header['copyrights'] = Array();
 		$header['licenses'] = Array();
-		$header['components'] = Array();
 
 		if (is_array($files)) foreach ($files as $file) {
 			$file_name = $pkg->get_file_name($file);
@@ -76,7 +101,6 @@ class Web extends Control {
 			$c = utf8_encode("\xa9");
 			$header['copyrights'][] = '- ' . preg_replace("/^(?:(?:copyright|&copy;|$c)\s*)+/i", '', $pkg->get_package_copyright($file_package));
 			$header['licenses'][] = "- {$pkg->get_package_license($file_package)}";
-			$header['components'][] = "- $file_package/$file_name: [" . implode(", ", $pkg->get_file_provides($file)) . "]";
 		}
 		$head = "/*\n---\n";
 		foreach ($header as $k => &$h) {
@@ -92,6 +116,32 @@ class Web extends Control {
 		$head .="...\n*/\n";
 
 		return $head;
+	}
+
+	protected function compress($contents){
+		global $config;
+		$pkgconfig = $config['packager'];
+
+		if (empty($pkgconfig['compressor']) || empty($pkgconfig['tmpdir'])){
+			error_log('packager-web: compressor or tmpdir not set');
+			return $contents;
+		}
+
+		$tempfile = tempnam($pkgconfig['tmpdir'], 'packager_');
+		if (!$tempfile){
+			error_log('packager-web: failed to create tempfile: ' . $tempfile);
+			return $contents;
+		}
+
+		file_put_contents($tempfile, $contents);
+
+		$cmd = str_replace('{FILE}', $tempfile, $pkgconfig['compressor']);
+		exec($cmd);
+
+		$contents = file_get_contents($tempfile);
+		unlink($tempfile);
+
+		return $contents;
 	}
 
 }
