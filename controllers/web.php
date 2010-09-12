@@ -27,8 +27,8 @@ class Web extends Control {
 
 				$file_meta = array(
 					'name' => $pkg->get_file_name($file),
-					'depends' => implode(',', $pkg->get_file_dependancies($file)),
-					'provides' => implode(',', $pkg->get_file_provides($file)),
+					'depends' => implode(', ', $pkg->get_file_dependancies($file)),
+					'provides' => implode(', ', $pkg->get_file_provides($file)),
 					'description' => markdown($pkg->get_file_description($file))
 				);
 
