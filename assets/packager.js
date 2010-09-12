@@ -273,6 +273,7 @@ var Packager = this.Packager = {
 	reset: function(){
 		for (var name in components) this.deselect(name);
 		for (var name in packages) this.enablePackage(name);
+		this.setLocationHash();
 	}
 
 };
