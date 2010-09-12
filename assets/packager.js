@@ -40,6 +40,8 @@ var Packager = this.Packager = {
 				parent.addListener('click', function(){
 					if (component.selected) Packager.deselect(name);
 					else Packager.select(name);
+
+					Packager.setLocationHash();
 				});
 			});
 
@@ -69,12 +71,6 @@ var Packager = this.Packager = {
 				event.stop();
 				Packager.reset();
 			}
-		});
-
-		Packager.link = document.id('packager-link');
-
-		if (Packager.link) Packager.link.addEvent('mouseup', function(){
-			this.select();
 		});
 
 		Packager.fromUrl();
@@ -123,8 +119,6 @@ var Packager = this.Packager = {
 		component.parent.addClass('selected');
 
 		this.check(name);
-
-		if (this.link) this.link.set('value', this.toUrl());
 	},
 
 	deselect: function(name){
@@ -136,8 +130,6 @@ var Packager = this.Packager = {
 		component.parent.removeClass('selected');
 
 		this.uncheck(name);
-
-		if (this.link) this.link.set('value', this.toUrl());
 	},
 
 	require: function(name, req){
@@ -173,6 +165,8 @@ var Packager = this.Packager = {
 		pkg.components.each(function(name){
 			Packager.select(name);
 		});
+
+		this.setLocationHash();
 	},
 
 	deselectPackage: function(name){
@@ -182,6 +176,8 @@ var Packager = this.Packager = {
 		pkg.components.each(function(name){
 			Packager.deselect(name);
 		});
+
+		this.setLocationHash();
 	},
 
 	enablePackage: function(name){
@@ -197,7 +193,7 @@ var Packager = this.Packager = {
 			components[name].element.set('disabled', false);
 		});
 
-		if (this.link) this.link.set('value', this.toUrl());
+		this.setLocationHash();
 	},
 
 	disablePackage: function(name){
@@ -215,7 +211,7 @@ var Packager = this.Packager = {
 			components[name].element.set('disabled', true);
 		});
 
-		if (this.link) this.link.set('value', this.toUrl());
+		this.setLocationHash();
 	},
 
 	getSelected: function(){
@@ -248,6 +244,10 @@ var Packager = this.Packager = {
 		return loc.protocol + '//' + loc.hostname + loc.pathname + (queryString ? '#' + queryString : '');
 	},
 
+	setLocationHash: function(){
+		window.location.hash = '#' + this.toQueryString();
+	},
+
 	fromUrl: function(){
 		var query = window.location.search || window.location.hash;
 		if (!query) return;
@@ -266,6 +266,8 @@ var Packager = this.Packager = {
 				Packager.disablePackage(name);
 			});
 		});
+
+		this.setLocationHash();
 	},
 
 	reset: function(){
