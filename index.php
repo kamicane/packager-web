@@ -1,7 +1,7 @@
 <?php
 
 putenv('LC_ALL=en_US.UTF-8');
-setlocale('LC_ALL', null);
+setlocale(LC_ALL, null);
 
 require "libs/packager/packager.php";
 require "libs/control/control.php";
