@@ -101,19 +101,15 @@
 	<?php endforeach; ?>
 
 		<p class="submit">
-			<?php
-
-			foreach ($config['buttons'] as $button){
-				if ($button == 'reset'){
-					echo '<input type="reset" value="reset" />';
-				} elseif ($button == 'download'){
-					echo '<input type="submit" value="download" />';
-				} elseif ($button == 'compress'){
-					echo '<input type="submit" name="compress" value="download compressed" />';
-				}
-			}
-
-			?>
+			<?php foreach ($config['buttons'] as $button): ?>
+				<?php if ($button == 'reset'): ?>
+					<input type="reset" value="reset" />
+				<?php elseif ($button == 'download'): ?>
+					<input type="submit" value="download" />
+				<?php elseif ($button == 'compress'): ?>
+					<input type="submit" name="compress" value="download compressed" />
+				<?php endif; ?>
+			<?php endforeach; ?>
 		</p>
 
 	</form>
