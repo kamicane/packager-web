@@ -122,12 +122,12 @@ class Web extends Control {
 		global $config;
 		$pkgconfig = $config['packager'];
 
-		if (empty($pkgconfig['compressor']) || empty($pkgconfig['tmpdir'])){
-			error_log('packager-web: compressor or tmpdir not set');
+		if (empty($pkgconfig['compressor'])){
+			error_log('packager-web: compressor not set');
 			return $contents;
 		}
 
-		$tempfile = tempnam($pkgconfig['tmpdir'], 'packager_');
+		$tempfile = tempnam(sys_get_temp_dir(), 'packager_');
 		if (!$tempfile){
 			error_log('packager-web: failed to create tempfile: ' . $tempfile);
 			return $contents;

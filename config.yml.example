@@ -7,7 +7,6 @@ packager:
   exports: packaged.js
   contenttype: text/javascript
   compressor: java -jar /usr/share/yui-compressor/yui-compressor.jar --type js -o {FILE} {FILE}
-  tmpdir: /tmp
 
 packages:
   - "/Users/kamicane/Sites/mootools-core-1.3/"
