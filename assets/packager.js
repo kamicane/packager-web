@@ -253,9 +253,8 @@ var Packager = this.Packager = {
 	},
 
 	fromUrl: function(){
-		this.reset();
-
 		var query = window.location.search || window.location.hash;
+		this.reset();
 		if (!query) return;
 
 		var parts = query.substr(1).split('&');
