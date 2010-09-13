@@ -45,19 +45,23 @@ var Packager = this.Packager = {
 				});
 			});
 
-			element.getElement('.select').addListener('click', function(){
+			var select = element.getElement('.select');
+			if (select) select.addListener('click', function(){
 				Packager.selectPackage(name);
 			});
 
-			element.getElement('.deselect').addListener('click', function(){
+			var deselect = element.getElement('.deselect');
+			if (deselect) deselect.addListener('click', function(){
 				Packager.deselectPackage(name);
 			});
 
-			element.getElement('.disable').addListener('click', function(){
+			var disable = element.getElement('.disable');
+			if (disable) disable.addListener('click', function(){
 				Packager.disablePackage(name);
 			});
 
-			element.getElement('.enable').addListener('click', function(){
+			var enable = element.getElement('.enable');
+			if (enable) enable.addListener('click', function(){
 				Packager.enablePackage(name);
 			});
 

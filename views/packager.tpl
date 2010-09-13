@@ -104,20 +104,12 @@
 			<?php
 
 			foreach ($config['buttons'] as $button){
-				switch ($button){
-
-					case 'reset':
-						echo '<input type="reset" value="reset" />';
-					break;
-
-					case 'download':
-						echo '<input type="submit" value="download" />';
-					break;
-
-					case 'compress':
-						echo '<input type="submit" name="compress" value="download compressed" />';
-					break;
-
+				if ($button == 'reset'){
+					echo '<input type="reset" value="reset" />';
+				} elseif ($button == 'download'){
+					echo '<input type="submit" value="download" />';
+				} elseif ($button == 'compress'){
+					echo '<input type="submit" name="compress" value="download compressed" />';
 				}
 			}
 
