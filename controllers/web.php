@@ -65,7 +65,7 @@ class Web extends Control {
 
 		if ($compress) $contents = $this->compress($contents);
 
-		header("Content-Type: text/plain");
+		header('Content-Type: ' . $config['packager']['contenttype']);
 		header('Content-Disposition: attachment; filename="' . $config['packager']['exports'] . '"');
 
 		echo $this->get_packager_command($files, $useonly);
