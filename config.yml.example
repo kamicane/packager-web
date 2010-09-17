@@ -5,7 +5,8 @@ view:
 
 packager:
   exports: packaged.js
-  contenttype: text/javascript
+  contenttype: application/javascript
+  charset: UTF-8
   compressor: java -jar /usr/share/yui-compressor/yui-compressor.jar --type js -o {FILE} {FILE}
 
 packages:

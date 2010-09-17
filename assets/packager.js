@@ -1,3 +1,19 @@
+/*
+---
+
+name: Packager
+
+description: Javascript for packager-web's frontend.
+
+license: MIT-style license.
+
+requires: [Core/Array, Core/Element.Style, Core/Element.Event, Core/DomReady]
+
+provides: Packager
+
+...
+*/
+
 (function(){
 
 var packages = {},
