@@ -10,11 +10,7 @@
 	<script type="text/javascript" src="<?php echo BASE_PATH; ?>/libs/mootools.js"></script>
 	<script type="text/javascript" src="<?php echo BASE_PATH; ?>/assets/packager.js"></script>
 	
-	<script type="text/javascript">
-		document.addEvent('domready', function(){
-			Packager.init('packager');
-		});
-	</script>
+	<script type="text/javascript">document.addEvent('domready', Packager.init);</script>
 	
 </head>
 <body>
