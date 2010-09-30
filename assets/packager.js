@@ -16,8 +16,7 @@ provides: Packager
 
 (function(){
 
-var packages = {},
-	components = {};
+var packages = {}, components = {};
 
 var Packager = this.Packager = {
 
@@ -290,13 +289,12 @@ var Packager = this.Packager = {
 	},
 
 	reset: function(){
-		for (var name in components) this.deselect(name);
-		for (var name in packages) this.enablePackage(name);
+		var name;
+		for (name in components) this.deselect(name);
+		for (name in packages) this.enablePackage(name);
 		this.setLocationHash();
 	}
 
 };
-
-document.addEvent('domready', Packager.init);
 
 })();
