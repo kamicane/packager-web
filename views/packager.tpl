@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<form id="packager" action="<?php echo BASE_PATH; ?>/web/download" method="post">
+	<form id="packager" action="web/download" method="post">
 
 	<?php foreach ($packages as $name => $data): ?>
 
